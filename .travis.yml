@@ -16,8 +16,8 @@ after_success:
   - docker build -t rondeg/multi-docker-worker ./worker
 
 script:
-echo "DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin  
-- docker push rondeg/multi-docker-client
-- docker push rondeg/multi-docker-nginx
-- docker push rondeg/multi-docker-server
-- docker push rondeg/multi-docker-worker
+  echo "DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin  
+  - docker push rondeg/multi-docker-client
+  - docker push rondeg/multi-docker-nginx
+  - docker push rondeg/multi-docker-server
+  - docker push rondeg/multi-docker-worker
