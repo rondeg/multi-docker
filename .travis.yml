@@ -1,5 +1,4 @@
 language: generic
-sudo: required
 services:
   - docker
 
@@ -7,18 +6,15 @@ before_install:
   - docker build -t rondeg/react-test -f ./client/Dockerfile.dev ./client
 
 script:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker run -e CI=true rondeg/react-test npm test
-
-after_success:
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker push rondeg/multi-client
-  - docker push rondeg/multi-nginx
-  - docker push rondeg/multi-server
-  - docker push rondeg/multi-worker
-
-script:
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker build -t rondeg/multi-client ./client
   - docker build -t rondeg/multi-nginx ./nginx
   - docker build -t rondeg/multi-server ./server
   - docker build -t rondeg/multi-worker ./worker
+
+after_success:
+  - docker push rondeg/multi-client
+  - docker push rondeg/multi-nginx
+  - docker push rondeg/multi-server
+  - docker push rondeg/multi-worker
