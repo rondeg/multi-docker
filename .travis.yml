@@ -17,7 +17,7 @@ after_success:
 
 script:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin  
-  - docker push rondeg/multi-docker-client
-  - docker push rondeg/multi-docker-nginx
-  - docker push rondeg/multi-docker-server
-  - docker push rondeg/multi-docker-worker
+  - docker push "$DOCKER_ID"/multi-docker-client
+  - docker push "$DOCKER_ID"/multi-docker-nginx
+  - docker push "$DOCKER_ID"/multi-docker-server
+  - docker push "$DOCKER_ID"/multi-docker-worker
