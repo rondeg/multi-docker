@@ -8,13 +8,13 @@ before_install:
 script:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker run -e CI=true rondeg/react-test npm test
-  - docker build -t rondeg/multi-client ./client
-  - docker build -t rondeg/multi-nginx ./nginx
-  - docker build -t rondeg/multi-server ./server
-  - docker build -t rondeg/multi-worker ./worker
 
 after_success:
+  - docker build -t rondeg/multi-client ./client
   - docker push rondeg/multi-client
+  - docker build -t rondeg/multi-nginx ./nginx
   - docker push rondeg/multi-nginx
+  - docker build -t rondeg/multi-server ./server
   - docker push rondeg/multi-server
+  - docker build -t rondeg/multi-worker ./worker
   - docker push rondeg/multi-worker
